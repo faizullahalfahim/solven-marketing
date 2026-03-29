@@ -1,52 +1,298 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* ১. কাস্টম থিম সেটআপ */
+/* ===================== */
+/* 1. SOLVEN BRAND THEME */
+/* ===================== */
 @theme {
-  --color-primary: #000000;    
-  --color-surface: #0a0a0a;    
-  --color-accent: #ffffff;     
-  --color-muted: #666666;      
-  
-  /* ফন্ট ফ্যামিলি - Clash Display না থাকলে Inter কাজ করবে */
-  --font-display: "Clash Display", "Inter", sans-serif;
+  /* Brand Colors */
+  --color-black:  #0C0C0C;
+  --color-card:   #161616;
+  --color-orange: #FF4D00;
+  --color-paper:  #F2EFE9;
+  --color-muted:  #888880;
+  --color-border: #222222;
+
+  /* Fonts */
+  --font-cairo: "Cairo", sans-serif;
+  --font-syne:  "Syne", sans-serif;
+  --font-dm:    "DM Sans", sans-serif;
 }
 
-/* ২. গ্লোবাল স্টাইল */
+/* =================== */
+/* 2. GOOGLE FONTS     */
+/* =================== */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500&display=swap');
+
+/* =================== */
+/* 3. GLOBAL BASE      */
+/* =================== */
 @layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: var(--color-primary);
-    /* নয়েজ ইফেক্টটা অনেক সময় লোড হতে দেরি করে, তাই নিচের ব্যাকগ্রাউন্ডটা ট্রাই করুন */
-    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
-    @apply text-white antialiased;
+    background-color: var(--color-black);
+    color: var(--color-paper);
+    font-family: var(--font-dm);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Arabic mode — applied via LanguageContext dir="rtl" */
+  [dir="rtl"] body,
+  [dir="rtl"] {
+    font-family: var(--font-cairo);
   }
 }
 
-/* ৩. প্রফেশনাল কম্পোনেন্ট */
+/* ========================= */
+/* 4. SOLVEN COMPONENTS      */
+/* ========================= */
 @layer components {
-  
-  /* হেডলাইন স্টাইল (Hero Text) */
-  .hero-text {
-    @apply font-[var(--font-display)] font-bold text-5xl md:text-8xl tracking-tighter leading-[0.9] uppercase;
+
+  /* --- TYPOGRAPHY --- */
+
+  /* Big display headline (Hero, Section titles) */
+  .solven-headline {
+    @apply font-bold leading-[1.05] tracking-tight text-[var(--color-paper)];
+    font-family: var(--font-syne);
   }
 
-  /* সলিড হোয়াইট বাটন (Minimalist) */
-  .btn-solven {
-    @apply px-10 py-4 bg-white text-black font-bold uppercase tracking-widest
-    hover:bg-transparent hover:text-white hover:border hover:border-white 
-    transition-all duration-300 text-[10px] md:text-xs rounded-none cursor-pointer;
+  /* Arabic headline override */
+  [dir="rtl"] .solven-headline {
+    font-family: var(--font-cairo);
+    @apply font-black tracking-normal;
   }
 
-  /* আউটলাইন বাটন */
-  .btn-solven-outline {
-    @apply px-10 py-4 border border-white/20 text-white font-bold uppercase tracking-widest
-    hover:bg-white hover:text-black transition-all duration-300 
-    text-[10px] md:text-xs rounded-none cursor-pointer;
+  /* Section tag — small uppercase label above headlines */
+  .solven-tag {
+    @apply text-[11px] uppercase tracking-[3px] text-[var(--color-orange)];
+    font-family: var(--font-dm);
   }
 
-  /* প্রিমিয়াম ব্ল্যাক কার্ড */
+  /* Body text muted */
+  .solven-body {
+    @apply text-[var(--color-muted)] leading-relaxed;
+    font-family: var(--font-dm);
+  }
+
+  [dir="rtl"] .solven-body {
+    font-family: var(--font-cairo);
+  }
+
+  /* --- BUTTONS --- */
+
+  /* Primary — Orange fill */
+  .btn-primary {
+    @apply inline-block px-9 py-4 rounded
+    bg-[var(--color-orange)] text-[var(--color-black)]
+    font-medium text-sm
+    hover:opacity-85 hover:-translate-y-0.5
+    transition-all duration-200 cursor-pointer border-none;
+    font-family: var(--font-dm);
+  }
+
+  [dir="rtl"] .btn-primary {
+    font-family: var(--font-cairo);
+  }
+
+  /* Ghost — bordered */
+  .btn-ghost {
+    @apply inline-block px-9 py-4 rounded
+    border border-[var(--color-border)] text-[var(--color-paper)]
+    font-medium text-sm
+    hover:border-[var(--color-muted)] hover:-translate-y-0.5
+    transition-all duration-200 cursor-pointer bg-transparent;
+    font-family: var(--font-dm);
+  }
+
+  [dir="rtl"] .btn-ghost {
+    font-family: var(--font-cairo);
+  }
+
+  /* Nav CTA */
+  .btn-nav {
+    @apply px-6 py-2.5 rounded
+    bg-[var(--color-orange)] text-[var(--color-black)]
+    font-medium text-sm
+    hover:opacity-85 transition-opacity duration-200 cursor-pointer border-none;
+    font-family: var(--font-dm);
+  }
+
+  /* Language toggle button */
+  .btn-lang {
+    @apply px-4 py-2 rounded text-sm
+    border border-[var(--color-border)]
+    text-[var(--color-muted)]
+    hover:border-[var(--color-muted)] hover:text-[var(--color-paper)]
+    transition-all duration-200 bg-transparent cursor-pointer;
+    font-family: var(--font-dm);
+  }
+
+  /* --- CARDS --- */
+
+  /* Standard dark card */
   .solven-card {
-    @apply bg-[var(--color-surface)] border border-white/5 p-8 
-    hover:border-white/20 transition-all duration-500 rounded-none;
+    @apply bg-[var(--color-card)]
+    border border-[var(--color-border)]
+    rounded-xl p-9
+    hover:border-[var(--color-orange)]
+    hover:-translate-y-1.5
+    transition-all duration-300;
   }
+
+  /* Service card — left orange bar on hover */
+  .service-card {
+    @apply bg-[var(--color-card)] p-10
+    relative overflow-hidden
+    hover:bg-[#1a1a1a]
+    transition-all duration-300;
+  }
+
+  .service-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-[3px] h-0
+    bg-[var(--color-orange)]
+    transition-all duration-500;
+  }
+
+  .service-card:hover::before {
+    @apply h-full;
+  }
+
+  /* Result/testimonial card */
+  .result-card {
+    @apply bg-[var(--color-card)]
+    border border-[var(--color-border)]
+    rounded-xl p-9
+    hover:border-[var(--color-orange)]
+    hover:-translate-y-1.5
+    transition-all duration-300;
+  }
+
+  /* Step card (How it works) */
+  .step-card {
+    @apply bg-[var(--color-black)] p-12
+    hover:[--stroke-color:var(--color-orange)]
+    transition-all duration-300;
+  }
+
+  /* --- INPUTS --- */
+
+  .solven-input {
+    @apply flex-1 bg-[var(--color-card)]
+    border border-[var(--color-border)]
+    rounded px-5 py-4
+    text-[var(--color-paper)] text-sm
+    outline-none placeholder:text-[var(--color-muted)]
+    focus:border-[var(--color-orange)]
+    transition-colors duration-200;
+    font-family: var(--font-dm);
+  }
+
+  [dir="rtl"] .solven-input {
+    font-family: var(--font-cairo);
+  }
+
+  /* --- LAYOUT HELPERS --- */
+
+  /* Section wrapper */
+  .solven-section {
+    @apply px-6 py-28 md:px-16 lg:px-24;
+  }
+
+  /* Max width container */
+  .solven-container {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Divider line */
+  .solven-divider {
+    @apply h-px bg-[var(--color-border)] my-6;
+  }
+
+  /* Industry pill badge */
+  .industry-pill {
+    @apply inline-block text-[11px] tracking-[2px] uppercase
+    bg-[rgba(255,77,0,0.1)] text-[var(--color-orange)]
+    px-3 py-1 rounded-full mb-6;
+    font-family: var(--font-dm);
+  }
+
+  /* Niche filter pill */
+  .niche-pill {
+    @apply border border-[var(--color-border)]
+    px-5 py-2 rounded-full text-sm text-[var(--color-muted)]
+    hover:border-[var(--color-orange)] hover:text-[var(--color-orange)]
+    transition-all duration-200 cursor-pointer bg-transparent;
+    font-family: var(--font-dm);
+  }
+
+  .niche-pill.active {
+    @apply bg-[var(--color-orange)] border-[var(--color-orange)]
+    text-[var(--color-black)] font-medium;
+  }
+
+  /* Pain point item */
+  .pain-item {
+    @apply flex items-start gap-4 p-6
+    border border-[var(--color-border)] rounded-lg
+    bg-[var(--color-black)]
+    hover:border-[var(--color-orange)]
+    transition-colors duration-300;
+  }
+
+  /* Pain icon box */
+  .pain-icon {
+    @apply w-10 h-10 rounded-md flex items-center justify-center
+    text-lg flex-shrink-0
+    bg-[rgba(255,77,0,0.1)];
+  }
+
+  /* Stat block */
+  .stat-num {
+    @apply leading-none mb-1.5;
+    font-family: var(--font-syne);
+    font-size: clamp(32px, 4vw, 42px);
+    font-weight: 800;
+    color: var(--color-paper);
+  }
+
+  .stat-num span {
+    color: var(--color-orange);
+  }
+
+  .stat-label {
+    @apply text-[13px] text-[var(--color-muted)];
+    font-family: var(--font-dm);
+  }
+}
+
+/* ========================= */
+/* 5. SCROLL REVEAL ANIMATION*/
+/* ========================= */
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
 }

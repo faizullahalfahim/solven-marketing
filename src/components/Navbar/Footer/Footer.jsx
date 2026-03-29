@@ -1,87 +1,233 @@
-import React from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaArrowUp } from 'react-icons/fa';
+import { useLang } from "../../../context/LanguageContext";
+
+const content = {
+  en: {
+    tagline: "We turn your followers into real customers.",
+    links: [
+      { label: "The Problem", href: "#pain"     },
+      { label: "Services",    href: "#services"  },
+      { label: "Results",     href: "#results"   },
+      { label: "About",       href: "#about"     },
+      { label: "Contact",     href: "#contact"   },
+    ],
+    copy: `© ${new Date().getFullYear()} Solven Marketing. All rights reserved.`,
+    location: "Riyadh, Saudi Arabia",
+  },
+  ar: {
+    tagline: "نحوّل متابعينك لزبائن فعليين.",
+    links: [
+      { label: "المشكلة",  href: "#pain"     },
+      { label: "خدماتنا", href: "#services"  },
+      { label: "النتائج", href: "#results"   },
+      { label: "من نحن",  href: "#about"     },
+      { label: "تواصل",   href: "#contact"   },
+    ],
+    copy: `© ${new Date().getFullYear()} Solven Marketing. جميع الحقوق محفوظة.`,
+    location: "الرياض، المملكة العربية السعودية",
+  },
+};
 
 const Footer = () => {
+  const { lang } = useLang();
+  const t = content[lang];
 
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+  const scrollTo = (href) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
 
-    return (
-        <footer className="relative bg-base-200 pt-16 pb-8 overflow-hidden">
-            {/* Background Decorative Element */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+  return (
+    <footer
+      style={{
+        backgroundColor: "var(--color-card)",
+        borderTop: "1px solid var(--color-border)",
+      }}
+    >
+      {/* Top row */}
+      <div
+        className="max-w-7xl mx-auto"
+        style={{
+          padding: "48px 60px 32px",
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          gap: "40px",
+          flexWrap: "wrap",
+          direction: "ltr",
+        }}
+      >
+        {/* Brand */}
+        <div style={{ maxWidth: "280px" }}>
+          <div
+            style={{
+              fontFamily: "var(--font-syne)",
+              fontWeight: 800,
+              fontSize: "22px",
+              color: "var(--color-paper)",
+              marginBottom: "12px",
+            }}
+          >
+            Solven<span style={{ color: "var(--color-orange)" }}>.</span>
+          </div>
+          <p
+            style={{
+              fontFamily: lang === "ar" ? "var(--font-cairo)" : "var(--font-dm)",
+              fontSize: "14px",
+              color: "var(--color-muted)",
+              lineHeight: 1.7,
+              marginBottom: "16px",
+            }}
+          >
+            {t.tagline}
+          </p>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              fontFamily: "var(--font-dm)",
+              fontSize: "12px",
+              color: "var(--color-muted)",
+            }}
+          >
+            <span style={{ color: "var(--color-orange)" }}>📍</span>
+            {t.location}
+          </div>
+        </div>
 
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 items-start">
-                    
-                    {/* Brand Section */}
-                    <div className="space-y-4">
-                        <h2 className="text-2xl font-bold italic">
-                            FA<span className="text-primary">HIM</span>
-                        </h2>
-                        <p className="text-base-content/70 max-w-xs">
-                            Building digital experiences with passion and precision. Let's create something amazing together.
-                        </p>
-                        <div className="flex gap-4 pt-2">
-                            <a href="https://github.com/faizullahalfahim" className="w-10 h-10 flex items-center justify-center rounded-full bg-base-300 hover:bg-primary hover:text-white transition-all duration-300 shadow-lg">
-                                <FaGithub size={20} />
-                            </a>
-                            <a href="https://www.linkedin.com/in/faizullahalfahim20" className="w-10 h-10 flex items-center justify-center rounded-full bg-base-300 hover:bg-primary hover:text-white transition-all duration-300 shadow-lg">
-                                <FaLinkedin size={20} />
-                            </a>
-                           
-                        </div>
-                    </div>
+        {/* Nav links */}
+        <nav>
+          <ul
+            style={{
+              listStyle: "none",
+              display: "flex",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            {t.links.map((link) => (
+              <li key={link.href}>
+                <button
+                  onClick={() => scrollTo(link.href)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontFamily: lang === "ar" ? "var(--font-cairo)" : "var(--font-dm)",
+                    fontSize: "14px",
+                    color: "var(--color-muted)",
+                    padding: 0,
+                    transition: "color 0.2s",
+                  }}
+                  onMouseEnter={(e) => (e.target.style.color = "var(--color-paper)")}
+                  onMouseLeave={(e) => (e.target.style.color = "var(--color-muted)")}
+                >
+                  {link.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-                    {/* Quick Links */}
-                    <div className="md:justify-self-center">
-                        <h3 className="text-lg font-bold mb-6">Quick Links</h3>
-                        <ul className="space-y-3">
-                            <li><a href="#" className="hover:text-primary transition-colors">Home</a></li>
-                            <li><a href="#about" className="hover:text-primary transition-colors">About Me</a></li>
-                            <li><a href="#skills" className="hover:text-primary transition-colors">Skills</a></li>
-                            <li><a href="#projects" className="hover:text-primary transition-colors">Projects</a></li>
-                        </ul>
-                    </div>
+        {/* CTA block */}
+        <div
+          style={{
+            backgroundColor: "var(--color-black)",
+            border: "1px solid var(--color-border)",
+            borderRadius: "12px",
+            padding: "28px 32px",
+            maxWidth: "260px",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: lang === "ar" ? "var(--font-cairo)" : "var(--font-syne)",
+              fontSize: "16px",
+              fontWeight: 700,
+              color: "var(--color-paper)",
+              marginBottom: "8px",
+            }}
+          >
+            {lang === "en" ? "Ready to grow?" : "جاهز تنمو؟"}
+          </div>
+          <p
+            style={{
+              fontFamily: lang === "ar" ? "var(--font-cairo)" : "var(--font-dm)",
+              fontSize: "13px",
+              color: "var(--color-muted)",
+              lineHeight: 1.6,
+              marginBottom: "20px",
+            }}
+          >
+            {lang === "en"
+              ? "Book a free call — no strings attached."
+              : "احجز كول مجاني — بدون أي التزام."}
+          </p>
+          <button
+            onClick={() => scrollTo("#contact")}
+            style={{
+              width: "100%",
+              backgroundColor: "var(--color-orange)",
+              color: "var(--color-black)",
+              border: "none",
+              padding: "12px 20px",
+              borderRadius: "6px",
+              fontFamily: "var(--font-dm)",
+              fontWeight: 600,
+              fontSize: "13px",
+              cursor: "pointer",
+              transition: "opacity 0.2s",
+            }}
+            onMouseEnter={(e) => (e.target.style.opacity = "0.85")}
+            onMouseLeave={(e) => (e.target.style.opacity = "1")}
+          >
+            {lang === "en" ? "Book a Free Call" : "احجز استشارة مجانية"}
+          </button>
+        </div>
+      </div>
 
-                    {/* Contact Info */}
-                    <div className="md:justify-self-end">
-                        <h3 className="text-lg font-bold mb-6">Newsletter</h3>
-                        <p className="text-sm text-base-content/60 mb-4">Subscribe to get my latest updates.</p>
-                        <div className="flex">
-                            <input 
-                                type="email" 
-                                placeholder="Email address" 
-                                className="input input-bordered rounded-r-none w-full focus:outline-none focus:border-primary" 
-                            />
-                            <button className="btn btn-primary rounded-l-none">Join</button>
-                        </div>
-                    </div>
-                </div>
+      {/* Bottom bar */}
+      <div
+        style={{
+          borderTop: "1px solid var(--color-border)",
+          padding: "20px 60px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          direction: "ltr",
+          flexWrap: "wrap",
+          gap: "12px",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "var(--font-dm)",
+            fontSize: "12px",
+            color: "var(--color-muted)",
+          }}
+        >
+          {t.copy}
+        </span>
+        <span
+          style={{
+            fontFamily: "var(--font-dm)",
+            fontSize: "12px",
+            color: "var(--color-muted)",
+          }}
+        >
+          Built with{" "}
+          <span style={{ color: "var(--color-orange)" }}>♥</span>
+          {" "}in Riyadh
+        </span>
+      </div>
 
-                {/* Divider */}
-                <div className="border-t border-base-300 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-sm opacity-60">
-                        © {new Date().getFullYear()} <span className="font-bold">Fahim</span>. All rights reserved.
-                    </p>
-                    
-                    {/* Scroll to Top Button */}
-                    <button 
-                        onClick={scrollToTop}
-                        className="btn btn-circle btn-primary btn-sm md:btn-md shadow-lg shadow-primary/20 animate-bounce"
-                    >
-                        <FaArrowUp />
-                    </button>
-
-                    <div className="flex gap-6 text-sm opacity-60">
-                        <a href="#" className="hover:text-primary">Privacy Policy</a>
-                        <a href="#" className="hover:text-primary">Terms of Service</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    );
+      <style>{`
+        @media (max-width: 768px) {
+          footer > div { padding: 40px 24px 24px !important; flex-direction: column !important; }
+          footer > div:last-child { padding: 16px 24px !important; flex-direction: column !important; text-align: center !important; }
+        }
+      `}</style>
+    </footer>
+  );
 };
 
 export default Footer;
